@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<application-state>
+  <context id="">
+    <application id="org.gnome.Nautilus.desktop" open-window-count="1" score="4" last-seen="1571983508"/>
+    <application id="update-manager.desktop" open-window-count="0" score="1" last-seen="1571983388"/>
+    <application id="gnome-terminal.desktop" open-window-count="0" score="0" last-seen="0"/>
+    <application id="org.gnome.Terminal.desktop" open-window-count="1" score="724.5" last-seen="1571988004"/>
+    <application id="org.gnome.gedit.desktop" open-window-count="1" score="14717.5" last-seen="1571982800"/>
+    <application id="firefox.desktop" open-window-count="1" score="22543" last-seen="1572144923"/>
+    <application id="gnome-initial-setup.desktop" open-window-count="0" score="1" last-seen="1571774900"/>
+  </context>
+</application-state>
