@@ -1,0 +1,29 @@
+10164 execve("./HelloWorld", ["./HelloWorld"], 0x7ffd204a6230 /* 53 vars */) = 0
+10164 brk(NULL)                         = 0x55d3720b3000
+10164 access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+10164 access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+10164 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+10164 fstat(3, {st_mode=S_IFREG|0644, st_size=77441, ...}) = 0
+10164 mmap(NULL, 77441, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8bff46e000
+10164 close(3)                          = 0
+10164 access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+10164 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+10164 read(3, "\x7f\x45\x4c\x46\x02\x01\x01\x03\x00\x00\x00\x00\x00\x00\x00\x00\x03\x00\x3e\x00\x01\x00\x00\x00\xb0\x1c\x02\x00\x00\x00\x00\x00"..., 832) = 832
+10164 fstat(3, {st_mode=S_IFREG|0755, st_size=2030544, ...}) = 0
+10164 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f8bff46c000
+10164 mmap(NULL, 4131552, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f8bfee69000
+10164 mprotect(0x7f8bff050000, 2097152, PROT_NONE) = 0
+10164 mmap(0x7f8bff250000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e7000) = 0x7f8bff250000
+10164 mmap(0x7f8bff256000, 15072, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f8bff256000
+10164 close(3)                          = 0
+10164 arch_prctl(ARCH_SET_FS, 0x7f8bff46d4c0) = 0
+10164 mprotect(0x7f8bff250000, 16384, PROT_READ) = 0
+10164 mprotect(0x55d3719a9000, 4096, PROT_READ) = 0
+10164 mprotect(0x7f8bff481000, 4096, PROT_READ) = 0
+10164 munmap(0x7f8bff46e000, 77441)     = 0
+10164 fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+10164 brk(NULL)                         = 0x55d3720b3000
+10164 brk(0x55d3720d4000)               = 0x55d3720d4000
+10164 write(1, "Hello Wolrd\n", 12)     = 12
+10164 exit_group(0)                     = ?
+10164 +++ exited with 0 +++
