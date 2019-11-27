@@ -5,100 +5,164 @@ import java.io.*;
  *
  * @author tchan
  */
+
+
 class MemAllo extends MemoryAllocation{
  
     int size;
+    int startAddress;
+    Node head;
+    static public Block firstBlock = null;
+    static public Block lastBlock = null;
     //init the list of freeblocks
-    LinkedList <Block> freeBlock; 
-    //init the list of returnblocks
-    LinkedList <Block> returnBlock;
+    LinkedList <> freeBlock = new LinkedList <>(); 
+    //init the list of reserved blocks
+    LinkedList <> reservedBlock = new LinkedList <>();
+        
     
-    
-    static private class Block{ //CONSTRUCTOR
+    static public class Block{ //CONSTRUCTOR
         int startAddress; //start adress of block
         int size; //size of block
-        //initiate block class to input starter address, and size of block inputted
-        public Block (int x, int y)
+        Block next; // init next Block
+        
+        public Block (int startAddress, int size) //initiate block class to input starter address, and size of block inputted
         { 
-            x = startAddress;
-            y = size;
+            this.startAddress = startAddress;
+            this.size = size;
         }
-    
-    } 
-  public class LinkedList{
-      Node head;
-      static class Node{
-          int data;
-          Node next;
-          Node (int n){
-              data = n;
-              next = null;
-          }
-      }
-  }
+        public void display(){
+            System.out.println("Block starting Address" + startAddress + "Block Size" + size);
+        }
+       
+    }
+     public int returnSize(){
+            return this.size;
+        
+        }
+    public int returnStrtAdd(){
+        return this.startAddress;        
+         
+     }
     
     public MemAllo(int mem_size){
         super(mem_size);
         int blockSize;
-        LinkedList <Block> freeBlock = new LinkedList <Block>();
-        LinkedList <Block> returnBlock = new LinkedList <Block>();
+        int availSize;
         
-        // init the list freeBlocks
-        //init the list returnedBlocks
-        while (size > 0)
-            blockSize = size - 1;
-            int block Address =  size + startAddress;
+        if (mem_size > 0)
+            availSize = mem_size - 1;
             
        // if size = 1000, then available mem is 1-999, 0 is reserved for failed case
       // init state: one node in freeBlocks:  {.startAddr=1, size=size-1} 
-        freeBlock.add(new Block(1, size-1));
+        freeBlock.add(new Block(1, size = size-1));
+        freeBlock.add(new Block (3,2));
+        freeBlock.add(new Block(5,2));
+        
+
     }
             
     
         public int alloc(int requested_size) {
-     // find the first available block with size >= requested_size.
+     // find the first available block with size >= requested_size in freeblocks
+         Block blockToFind =  null;
+         int reqSize = requested_size;
+         
+         
+       
+              if (freeBlock == null){ //is firstblock is nulls, there are noblocks
+                 return 0;
+             }
+             else { // current block, including firsblock is not null
+                 while(freeBlock != null){
+                     freeBlock.search(this.startAddress, this.size);
+                
+                     if (freeBlock.size >= reqSize){ //if block is greater or equal roo
+                     size =  freeBlock.size - size;
+                     startAddress = freeBlock.startAddress + size;
+                     freeBlock.remove();
+                     reservedBlock.add(new Block(startAddress, size));
+                     break;
+                 }
+                     else
+                        freeBlock = freeBlock.next;
 
-         if (freeBlock > requested_size)
-         //move this block from freeBlocks
-          freeBlock.remove();
-        //insert a new block into freeBlocks, with startAddr = removed_block.startAddr+size,  size= removed_block.size-size;
-          freeblock.
-     //before returning, add the removed_block to 
-      //list returnedBlocks.
-      //Return removed_block.startAddr; //@Anna, can we rename this to reserved_block or something?
-
-    
-    
-    public void free(int addr){
-         //use case: free(1);
-      //question1: how do we know 1 is a legit address?
-       //question2: how do we know the reserved block of 1 has size 10?
-      //to answer the question 1&2, consult the returnedBlock list, find the size of the addr to be recycled.
-      //we likely pay O(n) to do this query. Can we do better?
-      //perhaps we can use a hashtable 
-
-      // if returnedBlock list tells us the addr is legit.
-      // do not forget to remove it from returnedBlock list
-     
-        // construct a block to free {.startAddr=addr, .size=size}
-        //insert this block B to freeBlocks
-        // suppose freeBlocks is sorted (either impl a sortedLinkedList or do list.sort(...))
-        //if B is neither head nor tail then
-              //mayMerge B with its successor
-              //mayMerge B with its predecessor
-              //can we do it the other way around? Merge it with predecessor then successor?
-        //if B is head, only mayMerge with its successor
-        //if B is tail, only mayMerge with its predecessor
+             }
+            } 
+           return startAddress;
+         }
+        public void free(int addr){
       
+      while(reservedBlock.search(reservedBlock.startAddress, addr)){
+          if (startAddress == addr){
+              freeBlock.add(new Block(addr, size));
+              reservedBlock.remove();
+             
+          }
+          else{
+              System.out.println("Not legit address");
+          }
+          
+      }
+            
+    }
+
+    
+  public int size(){  
+   int sum = 0;
+   for (Block eachBlock : freeBlock){
+       freeBlock.search(freeBlock.startAddress, freeBlock.size);
+     sum = sum + freeBlock.size;
+   } 
+   return sum;
+  }
+  
+    public int max_size(){
+        int maxSize = 0;
+        int currentSize;
+        int nextSize = 0;
+        
+        currentSize = freeBlock.size;
+        
+        for (Block eachBlock : freeBlock){
+            nextSize = eachBlock.size;
+            if(nextSize > currentSize){
+                currentSize = nextSize;
+            } 
+        }
+        maxSize = nextSize;
+        return maxSize;
+    }         
+    
+  private void mayMerge(Node one, Node two){
+     
 }
 
+class Node{
+        int data;
+        Node next;
+        Node(int d){
+            data = d;
+            next = null;
+        }
     }
-    public int size(){
+class LinkedList{
+    
+    Node head;
+    
+    public boolean search(Node head, int x){
+        Node current = head;
+        while (current != null){
+            if (current.data == x)
+                return true;
+            current = current.next;
+        }
+        return false;
+    } 
+
+}   
+    
         
-    }
-    public int max_size(){
-        
-    }
+  
     
     
-}
+ 
