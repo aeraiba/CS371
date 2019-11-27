@@ -59,7 +59,6 @@ class MemAllo extends MemoryAllocation{
     public int alloc(int requested_size) {
         // find the first available block with size >= requested_size in freeblocks
         Block head = freeBlocks.head;
-        int resAdd;
         int strAdd;
         int blkSize;
 
@@ -92,7 +91,15 @@ class MemAllo extends MemoryAllocation{
         }
     }
     public void free(int addr){
-
+        Block head  = reservedBlocks.head;
+        while (head.next != null){
+           if (head.startAddress == addr) {
+               freeBlocks.add(addr, head.size);
+               reservedBlocks.delete(addr);
+               break; //make conditon stop this loop
+           } else {
+               head = head.next;
+         }
     }
 
 
@@ -121,6 +128,16 @@ class MemAllo extends MemoryAllocation{
         return maxSize;
     }
 
+    private void mayMerge(Block one, Block two) {
+        int newSize;
+        int newAddr;
+        if (one.startAddress + one.size == two.startAddress) {
+            newSize = one.size + two.size;
+            one.size = newSize;
+            one.next = two.next;
+            two.next = null;
+        }
+    }
 
 
     class LinkedList {
@@ -138,10 +155,11 @@ class MemAllo extends MemoryAllocation{
             newBlock.next = head;
             head = newBlock;
         }
-
-
-
-        //public void remove(){  }
+        public void remove (Block aBlock){
+            aBlock.next = null;
+            aBlock = null;
+        }
+    }
     }
 }
   
