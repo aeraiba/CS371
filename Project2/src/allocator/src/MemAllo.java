@@ -32,15 +32,7 @@ class MemAllo extends MemoryAllocation{
             System.out.println("Block starting Address" + startAddress + "Block Size" + size);
         }
 
-        public boolean search(Block head, int x){
-            Block current = head;
-            while (current != null){
-                if (current.data == x)
-                    return true;
-                current = current.next;
-            }
-            return false;
-        }
+
 
     }
 
@@ -95,7 +87,8 @@ class MemAllo extends MemoryAllocation{
         while (head.next != null){
            if (head.startAddress == addr) {
                freeBlocks.add(addr, head.size);
-               reservedBlocks.delete(addr);
+               reservedBlocks.remove(addr);
+               re
                break; //make conditon stop this loop
            } else {
                head = head.next;
@@ -128,15 +121,7 @@ class MemAllo extends MemoryAllocation{
         return maxSize;
     }
 
-    private void mayMerge(Block one, Block two) {
-        int newSize;
-        int newAddr;
-        if (one.startAddress + one.size == two.startAddress) {
-            newSize = one.size + two.size;
-            one.size = newSize;
-            one.next = two.next;
-            two.next = null;
-        }
+
     }
 
 
@@ -155,11 +140,35 @@ class MemAllo extends MemoryAllocation{
             newBlock.next = head;
             head = newBlock;
         }
-        public void remove (Block aBlock){
+        public void remove(int startAddress, int size){
+            Block preCursor = search(startAddress);
+            Block aBlock = preCursor.next;
+            preCursor.next = preCursor.next.next;
             aBlock.next = null;
-            aBlock = null;
+
         }
-    }
+        public Block search(int startAddress){
+            Block current = head;
+            while (current.next != null){
+                if (current.next.startAddress == startAddress)
+                    return current;
+                current = current.next;
+            }
+            return new Block(-1,-1);
+        }
+        private void mayMerge(Block one, Block two) {
+            int newSize;
+            int newAddr;
+            if (one.startAddress + one.size == two.startAddress) {
+                newSize = one.size + two.size;
+                one.size = newSize;
+                one.next = two.next;
+                two.next = null;
+            }
+        }
+        public void insertionSort(){
+
+        }
     }
 }
   
