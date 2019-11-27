@@ -88,7 +88,6 @@ class MemAllo extends MemoryAllocation{
            if (head.startAddress == addr) {
                freeBlocks.add(addr, head.size);
                reservedBlocks.remove(addr);
-               re
                break; //make conditon stop this loop
            } else {
                head = head.next;
@@ -106,7 +105,7 @@ class MemAllo extends MemoryAllocation{
         return sum;
     }
 
-    public int max_size(){
+    public int max_size() {
         int maxSize = 0;
         Block head = reservedBlocks.head;
         Block newBlock = null;
@@ -118,10 +117,9 @@ class MemAllo extends MemoryAllocation{
                 maxSize = head.size;
             }
         }
-        return maxSize;
+
     }
-
-
+        return maxSize;
     }
 
 
@@ -141,7 +139,7 @@ class MemAllo extends MemoryAllocation{
             newBlock.next = head;
             head = newBlock;
         }
-        public void remove(int startAddress, int size){
+        public void remove(int startAddress){
             Block preCursor = search(startAddress);
             Block aBlock = preCursor.next;
             preCursor.next = preCursor.next.next;
