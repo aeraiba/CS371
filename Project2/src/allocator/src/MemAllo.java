@@ -105,7 +105,7 @@ class MemAllo extends MemoryAllocation{
         return sum;
     }
 
-    public int max_size() {
+    public int max_size(){
         int maxSize = 0;
         Block head = reservedBlocks.head;
         Block newBlock = null;
