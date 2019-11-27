@@ -7,6 +7,7 @@ import java.io.*;
  */
 
 
+
 class MemAllo extends MemoryAllocation{
  
     
