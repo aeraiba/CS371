@@ -129,6 +129,7 @@ class MemAllo extends MemoryAllocation{
 
         Block head;
         Block temp;
+        Block sorted;
 
         int newSize;
 
@@ -166,7 +167,32 @@ class MemAllo extends MemoryAllocation{
                 two.next = null;
             }
         }
-        public void insertionSort(){
+        public void insertionSort(Block insteredBlock){
+            sorted = null;
+            Block current = insteredBlock;
+            while (current != null) {
+                Block next = current.next;
+                sortedInsert(current);
+                current = next;
+            }
+            head = sorted;
+            }
+
+        public void sortedInsert(Block newBlock){
+            if (sorted == null || sorted.startAddress > newBlock.startAddress){
+                newBlock.next = sorted;
+                sorted = newBlock;
+                }
+            else {
+                Block current = sorted;
+                while (current.next != null && current.next.startAddress < newBlock.startAddress){
+                    current = current.next;
+                }
+                newBlock.next = current.next;
+                current.next = newBlock;
+            }
+
+
 
         }
     }
