@@ -6,6 +6,7 @@ public class TestMemoryAllocation {
 
 	static final int TEST_SIZE_1 = 10;
 	static final int TEST_SIZE_2 = 20;
+        
 
 	static boolean test1(MemoryAllocation m) {
 		boolean result = true;
