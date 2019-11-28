@@ -110,16 +110,20 @@ public class MemAllo extends MemoryAllocation{
   
     public int max_size(){
         int maxSize = 0;
-        Block head = reservedBlocks.head;
+        Block head = freeBlocks.head;
         Block newBlock = null;
-        while (head.next != null){
-            newBlock = head;
-            head = head.next;
-            
-            if (head.size > newBlock.size){
-                maxSize = head.size;
+        if (head.next != null) {
+            while (head.next != null) {
+                newBlock = head;
+                head = head.next;
+
+                if (head.size > newBlock.size) {
+                    maxSize = head.size;
+                }
             }
         }
+        else
+            return 0;
    return maxSize;
     }         
    
