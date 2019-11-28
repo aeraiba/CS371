@@ -43,22 +43,25 @@ public class MemAllo extends MemoryAllocation{
                         reservedBlocks.add(head.startAddress, requested_size);
                         head.size = head.size - requested_size;
                         head.startAddress = head.startAddress + requested_size;
+                        freeBlocks.printList();
                         return head.startAddress;
                     }
                     if(head.size == requested_size){
                         reservedBlocks.add(head.startAddress, head.size);
                         freeBlocks.remove(head.startAddress);
+                        freeBlocks.printList();
                         return head.startAddress;
                     }
                     else {
                         head = head.next;
                     }
                 }
-            } 
+            }
         }
         public void free(int addr){
             Block removed = reservedBlocks.remove(addr);
             freeBlocks.add(addr, removed.size);
+            freeBlocks.printList();
         }
     
         public int size(){
