@@ -56,8 +56,7 @@ public class MemAllo extends MemoryAllocation{
       // init state: one node in freeBlocks:  {.startAddr=1, size=size-1} 
         freeBlocks.add(1, availSize);
     }
-            
-    
+
         public int alloc(int requested_size) {
      // find the first available block with size >= requested_size in freeblocks
         Block head = freeBlocks.head;
