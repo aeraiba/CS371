@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
-public class MyMemory {
+public class MyMemory extends Memory {
     byte [] data; // stores data, index is PA
     HashTable<Integer, PTE> pageTable; 
     String swap_file;
@@ -72,7 +72,7 @@ public class MyMemory {
         }
         
         /* Returns value for a key. */
-        public V get(int va, K key) throws FileNotFoundException, IOException {
+        public V get(int va, K key) {
             
             /* Find the head of chain for a given key. */
             int chainIndex = getChainIndex(key);
@@ -120,7 +120,8 @@ public class MyMemory {
     }
     
     /* Constructor */
-    public MyMemory (int size) {
+    public MyMemory (int size, String swap_file) {
+        super(size, swap_file);
         memSize = size;
         data = new byte[memSize];
         
@@ -128,12 +129,12 @@ public class MyMemory {
         pageTable = new HashTable<>();
         
         /* Setup swap file. Perhaps create the swap file and write 65536 all-zero bytes. */
-        swap_file = "swap_file.txt";
+        this.swap_file = swap_file;
         f = new File(swap_file);
     }
     
     /* How to implement addrTranslate? */
-    public int addrTranslate(int va) throws Exception {
+    public int addrTranslate(int va) {
         int vpn = getVPN(va);
         int offset = getOffset(va);
         int pfn;
@@ -143,13 +144,9 @@ public class MyMemory {
            Find the PTE the vpn maps with, find the pfn the vpn maps to, 
            and construct PA to return. Else, raise NotMappedException.
         */
-        try {
-            value = pageTable.get(va, vpn);
-            int paddr = constructPA(value.pfn, offset);
-            return paddr;
-        } catch (Exception e) {
-            throw new Exception("Raised NotMappedException. ");
-        }
+        value = pageTable.get(va, vpn);
+        int paddr = constructPA(value.pfn, offset);
+        return paddr;
     }
     
     /* Helper function to extract vpn from a virtual address. */
@@ -172,15 +169,21 @@ public class MyMemory {
     
     /* How to implement pageFaultHandler? pageFaultHandler is only invoked when a 
        NotMappedException is thrown out. Here, addr is the virtual address. */
-    public void pageFaultHandler(int addr) throws FileNotFoundException, IOException {
-        byte [] buffer = new byte[64]; // buffer to hold a page worth of data from swap file
+    public void pageFaultHandler(int addr) {
+        byte [] buffer = new byte [64]; // buffer to hold a page worth of data from swap file
         int vpn = getVPN(addr);
         int offset = getOffset(addr);
-        int pfn = 0;
+        int pfn;
         
-        FileChannel channel = new RandomAccessFile(f, "r").getChannel();
-        ByteBuffer rbuf = channel.map(FileChannel.MapMode.READ_ONLY, offset, PAGE_SIZE);
-        rbuf.get(buffer); // this loads 64 bytes from file into buffer
+        try {
+            FileChannel channel = new RandomAccessFile(f, "r").getChannel();
+            ByteBuffer rbuf = channel.map(FileChannel.MapMode.READ_ONLY, offset, PAGE_SIZE);
+            rbuf.get(buffer); // this loads 64 bytes from file into buffer
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("FileNotFoundException.");
+        } catch (IOException ioe) {
+            System.out.println("IOException.");
+        }
         
         /* Map vpn to a pfn, we need to create a new PTE(vpn, pfn) and add it to the pageTable. 
            What if no pfn is available? What if all slots in data array are mapped? Eviction is
@@ -199,8 +202,9 @@ public class MyMemory {
     /* Writes specified value into memory at specified position (address). The simplest way 
        to implement it is to write-through: write into the memory and write back to the swap file. 
        It must solve the case when the requested page is not in memory. */
-    public void write(int addr, byte value) throws Exception {
+    public void write(int addr, byte value) {
         int paddr;
+        int offset = getOffset(addr);
         try {
             paddr = addrTranslate(addr);
         } catch (Exception e) {
@@ -211,12 +215,27 @@ public class MyMemory {
         data[paddr] = value;
         
         /* Write back to the swap file using buffer. */
+        byte [] buffer = new byte [64];
+        
+        try {
+            FileChannel channel = new RandomAccessFile(f, "w").getChannel();
+            ByteBuffer rbuf = channel.map(FileChannel.MapMode.READ_WRITE, offset, PAGE_SIZE);
+            rbuf.get(buffer);  
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("FileNotFoundException.");
+        } catch (IOException ioe) {
+            System.out.println("IOException.");
+        }
+        
+        for(int i = 0; i < PAGE_SIZE; i++) {
+            buffer[i] = data[(pfn*PAGE_SIZE)+i];
+        }
     }
     
     /* Returns value that was stored at address addr, which is a virtual address. Similar to the write
        function, it must solve the situation if the page is not in the memory. The simplest way to
        implement it is to load the page from the swap file into memory first. */
-    public byte read(int addr) throws Exception {
+    public byte read(int addr) {
         int paddr;
         try {
             paddr = addrTranslate(addr);
