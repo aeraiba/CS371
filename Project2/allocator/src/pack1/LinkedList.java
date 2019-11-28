@@ -57,28 +57,35 @@ class LinkedList {
         }
     }
 
-    public void insertionSort(Block aBlock) {
+    public void insertionSort() {
         sorted = null;
-        Block current = aBlock;
+        Block current = head;
         while (current != null) {
-            Block next = current.next;
             sortedInsert(current);
-            current = next;
+            current = current.next;
         }
+        // after we sort it, we need to compare every adjacent block pair
+        // to test for merges with mayMerge. In this process, it is
+        // important to remember that when you merge a pair of nodes, this
+        // may change weather or not you have already tested cursor with cursor.next
+
         head = sorted;
     }
     public void sortedInsert(Block newBlock) {
-        if (sorted == null || sorted.startAddress >= newBlock.startAddress) {
-            newBlock.next = sorted;
+        if (sorted == null){
             sorted = newBlock;
-        }
-        else {
-            Block current = sorted;
-            while (current.next != null && current.next.startAddress> newBlock.startAddress) {
-                current = current.next;
+        } else {
+            Block cursor = sorted;
+            if (cursor.startAddress < newBlock.startAddress){
+                newBlock.next = sorted;
+                sorted = newBlock;
+                return;
             }
-            newBlock.next = current.next;
-            current.next = newBlock;
+            while (cursor.next != null && cursor.next.startAddress >= newBlock.startAddress){
+                cursor = cursor.next;
+            }
+            newBlock.next =  cursor.next;
+            cursor.next = newBlock;
         }
     }
 

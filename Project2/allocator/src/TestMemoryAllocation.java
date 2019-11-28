@@ -30,6 +30,7 @@ public class TestMemoryAllocation {
 			m.free(ptr[i]);
 			ptr[i] = 0;
 		}
+		// We know for sure by now that max_size() works if result is true
 		if(m.max_size() != (u_limit-l_limit)*TEST_SIZE_1) {
 			result = false;
 		}
