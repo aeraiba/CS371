@@ -57,20 +57,6 @@ class LinkedList {
         }
     }
 
-    public void insertionSort() {
-        sorted = null;
-        Block current = head;
-        while (current != null) {
-            sortedInsert(current);
-            current = current.next;
-        }
-        // after we sort it, we need to compare every adjacent block pair
-        // to test for merges with mayMerge. In this process, it is
-        // important to remember that when you merge a pair of nodes, this
-        // may change weather or not you have already tested cursor with cursor.next
-
-        head = sorted;
-    }
     public void sortedInsert(Block newBlock) {
         if (sorted == null){
             sorted = newBlock;
