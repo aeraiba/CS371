@@ -1,5 +1,7 @@
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+
+import org.jetbrains.annotations.NotNull;
 import pack1.MemoryAllocation;
 
 public class TestMemoryAllocation {
@@ -8,6 +10,7 @@ public class TestMemoryAllocation {
 	static final int TEST_SIZE_1 = 10;
 	static final int TEST_SIZE_2 = 20;
         
+
 
 	static boolean test1(MemoryAllocation m) {
 		boolean result = true;

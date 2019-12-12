@@ -12,6 +12,6 @@ public class Block{ //CONSTRUCTOR
         this.size = size;
     }
     public void display(){
-        System.out.println("Block starting Address" + startAddress + "Block Size" + size);
+        System.out.println("Block starting Address " + startAddress + "Block Size " + size);
     }
 }
