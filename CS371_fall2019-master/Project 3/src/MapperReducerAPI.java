@@ -20,12 +20,15 @@ public abstract class MapperReducerAPI implements Comparator {
 		return ret;
 	}
 	public int compare(Object k1, Object k2) {
+
 		return ((KV)k1).key.toString().compareTo(((KV)k2).key.toString());
 	}
 	public int compareKeys(Object k1, Object k2) {
+
 		return ((String)k1).compareTo(((String)k2));
 	}
 	public int compareValues(Object v1, Object v2) {
+
 		return ((String)v1).compareTo(((String)v2));
 	}
 

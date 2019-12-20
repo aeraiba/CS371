@@ -11,53 +11,41 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
 {
    private Node<AnyType> head;
 
- /**
-   *  Constructs an empty list
-   */
+   //Constructs an empty list
    public LinkedList()
    {
       head = null;
    }
- /**
-   *  Returns true if the list is empty
-   *
-   */
+
+   // Returns true if the list is empty
    public boolean isEmpty()
    {
       return head == null;
    }
- /**
-   *  Inserts a new node at the beginning of this list.
-   *
-   */
+
+   //Inserts a new node at the beginning of this list.
    public void addFirst(AnyType item)
    {
-      head = new Node<AnyType>(item, head);
+       head = new Node<AnyType>(item, head);
    }
- /**
-   *  Returns the first element in the list.
-   *
-   */
+
+   // Returns the first element in the list.
    public AnyType getFirst()
    {
       if(head == null) throw new NoSuchElementException();
 
       return head.data;
    }
- /**
-   *  Removes the first element in the list.
-   *
-   */
+
+   //Removes the first element in the list
    public AnyType removeFirst()
    {
       AnyType tmp = getFirst();
       head = head.next;
       return tmp;
    }
- /**
-   *  Inserts a new node to the end of this list.
-   *
-   */
+
+   //Inserts a new node to the end of this list.
    public void addLast(AnyType item)
    {
       if( head == null)
@@ -70,10 +58,8 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
          tmp.next = new Node<AnyType>(item, null);
       }
    }
- /**
-   *  Returns the last element in the list.
-   *
-   */
+
+   //Returns the last element in the list.
    public AnyType getLast()
    {
       if(head == null) throw new NoSuchElementException();
@@ -83,18 +69,14 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
 
       return tmp.data;
    }
- /**
-   *  Removes all nodes from the list.
-   *
-   */
+
+   //Removes all nodes from the list.
    public void clear()
    {
       head = null;
    }
- /**
-   *  Returns true if this list contains the specified element.
-   *
-   */
+
+  //Returns true if this list contains the specified element.
    public boolean contains(AnyType x)
    {
       for(AnyType tmp : this)
@@ -102,10 +84,8 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
 
       return false;
    }
- /**
-   *  Returns the data at the specified position in the list.
-   *
-   */
+
+  // Returns the data at the specified position in the list
    public AnyType get(int pos)
    {
       if (head == null) throw new IndexOutOfBoundsException();
@@ -117,10 +97,8 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
 
       return tmp.data;
    }
- /**
-   *  Returns a string representation
-   *
-   */
+
+   //Returns a string representation
    public String toString()
    {
       StringBuffer result = new StringBuffer();
@@ -129,10 +107,8 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
 
       return result.toString();
    }
- /**
-   *  Inserts a new node after a node containing the key.
-   *
-   */
+
+   //Inserts a new node after a node containing the key.
    public void insertAfter(AnyType key, AnyType toInsert)
    {
       Node<AnyType> tmp = head;
@@ -142,10 +118,8 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
       if(tmp != null)
          tmp.next = new Node<AnyType>(toInsert, tmp.next);
    }
- /**
-   *  Inserts a new node before a node containing the key.
-   *
-   */
+
+   //Inserts a new node before a node containing the key.
    public void insertBefore(AnyType key, AnyType toInsert)
    {
       if(head == null) return;
@@ -168,10 +142,8 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
       if(cur != null)
          prev.next = new Node<AnyType>(toInsert, cur);
    }
- /**
-   *  Removes the first occurrence of the specified element in this list.
-   *
-   */
+
+   //Removes the first occurrence of the specified element in this list.
    public void remove(AnyType key)
    {
       if(head == null)
@@ -199,10 +171,9 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
       prev.next = cur.next;
    }
  
- /**
-   *  Returns a deep copy of the list
-   *  Complexity: O(n)
-   */
+   //Returns a deep copy of the list
+   //Complexity: O(n)
+
    public LinkedList<AnyType> copy()
    {
       LinkedList<AnyType> twin = new LinkedList<AnyType>();
@@ -215,10 +186,10 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
 
       return twin.reverse();
    }
- /**
-   *  Reverses the list
-   *  Complewxity: O(n)
-   */
+
+   //Reverses the list
+   //Complewxity: O(n)
+
    public LinkedList<AnyType> reverse()
    {
       LinkedList<AnyType> list = new LinkedList<AnyType>();
@@ -232,10 +203,9 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
    }
    
    
-   /**
-    *  Inserts a new node before a node containing the key.
-    *
-    */
+
+    //Inserts a new node before a node containing the key.
+
     public void insertSort(AnyType key, Comparator<AnyType> cmp)
     {
        if(head == null) { 
@@ -299,12 +269,12 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
 
       public LinkedListIterator()
       {
-         nextNode = head;
+          nextNode = head;
       }
 
       public boolean hasNext()
       {
-         return nextNode != null;
+          return nextNode != null;
       }
 
       public AnyType next()

@@ -15,16 +15,20 @@ public class MapReduce {
 	static Logger LOGGER;
 	
 	// External functions: these are what you must define
-	static PartitionTable pt ;
+	static PartitionTable [] pt = new PartitionTable[];
 	static MapperReducerAPI customMR; 
 	static int numPartitions;
 	
 	static void MREmit(Object key, Object value)
 	{
+        KV keyvalue = new KV(key, value);
+        keyvalue.Partitioner();
 		//TODO: (key, value) must be emit into PartitionTable.
 		// use Partitioner defined in MapperReducerAPI to
 		// compute the index of partitions where this key will be
 		// added.
+
+        //add key value itno partition table keyvalue.;
 		
 	}
 	
