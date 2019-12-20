@@ -28,4 +28,5 @@ public abstract class MapperReducerAPI implements Comparator {
 	public int compareValues(Object v1, Object v2) {
 		return ((String)v1).compareTo(((String)v2));
 	}
+
 }
