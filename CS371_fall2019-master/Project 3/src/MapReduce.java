@@ -21,8 +21,9 @@ public class MapReduce {
 	
 	static void MREmit(Object key, Object value)
 	{
-        KV keyvalue = new KV(key, value);
-        keyvalue.Partitioner();
+        KV keyvalue = new KV(key, value);'
+        int index = keyvalue.Partitioner();
+        pt.addToPartitonTableAt(keyvalue);
 		//TODO: (key, value) must be emit into PartitionTable.
 		// use Partitioner defined in MapperReducerAPI to
 		// compute the index of partitions where this key will be
