@@ -4,7 +4,7 @@
  * by Dr. Victor Adamchik
  *
  *****************************************************************************/
- 
+
 import java.util.*;
 
 public class LinkedList<AnyType> implements Iterable<AnyType>
@@ -170,7 +170,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
       //delete cur node
       prev.next = cur.next;
    }
- 
+
    //Returns a deep copy of the list
    //Complexity: O(n)
 
@@ -201,23 +201,23 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
       }
       return list;
    }
-   
-   
+
+
 
     //Inserts a new node before a node containing the key.
 
     public void insertSort(AnyType key, Comparator<AnyType> cmp)
     {
-       if(head == null) { 
-    	   head = new Node<AnyType>(key, null);       
+       if(head == null) {
+    	   head = new Node<AnyType>(key, null);
     	   return;
        }
-       
+
        if(cmp.compare(key, head.data) <=0){
     	   addFirst(key);
     	   return;
        }
-       
+
        Node<AnyType> prev = null;
        Node<AnyType> cur = head;
 
@@ -227,9 +227,9 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
           cur = cur.next;
        }
        //insert between cur and prev
-       prev.next = new Node<AnyType>(key, cur);  
+       prev.next = new Node<AnyType>(key, cur);
     }
-   
+
  /*******************************************************
  *
  *  The Node class
@@ -287,11 +287,11 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
       public AnyType peek() {
     	  if (!hasNext()) throw new NoSuchElementException();
           AnyType res = nextNode.data;
-          return res;    	  
+          return res;
       }
       public void remove() { throw new UnsupportedOperationException(); }
    }
-   
+
 
 
 

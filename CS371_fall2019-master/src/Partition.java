@@ -10,13 +10,9 @@ class Partition {
         Object key;
         int value;
 
-        public Partition(int index, Object key, int value){
+        public Partition(int index, Object key, int value) {
             this.index = index;
-            this.key =key;
+            this.key = key;
             this.value = value;
         }
-
-
     }
-	
-

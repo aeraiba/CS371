@@ -2,10 +2,10 @@ import java.util.Comparator;
 
 public abstract class MapperReducerAPI implements Comparator {
 	abstract void Map(Object inputSource);
-	
+
 	abstract void Reduce(Object key, int partition_number);
 
-	long Partitioner(Object key, int num_partitions){ 
+	long Partitioner(Object key, int num_partitions){
 		String k = (String) key;
 		char [] ck = k.toCharArray();
 		long hash = 5381;
