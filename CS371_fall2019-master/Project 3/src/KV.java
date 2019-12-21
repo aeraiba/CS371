@@ -8,4 +8,11 @@ class KV {
 		this.val = value;
 	}
 
+	public Object getKey() {
+		return this.key;
+	}
+	public Object getValue(){
+		return this.val;
+	}
+
 }
