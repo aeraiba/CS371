@@ -5,46 +5,32 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-class Partition<E> {
+class Partition<KV> extends LinkedList{
 
 
-        int index;
-        Object key;
-        int value;
-        KV next;
-        KV head;
-        public Partition(int index, Object key, int value) {
-            LinkedList<KV> partitions = new LinkedList();
-        }
+    private final int size;
+    private final LinkedList<KV> list;
+    int index;
+    Object key;
+    int value;
+    KV next;
+    KV head;
 
+        public Partition(LinkedList <KV> list, int size) {
+        this.list = list;
+        this.size = size;
+    }
 
-        public void add(Object key, int value){
-            KV keyvalue = new KV(key, value);
-            keyvalue.next = head;
-            head = keyvalue;
-        }
-        public Object getKey() {
-            return this.key;
-        }
-        public int getValue(){
-            return this.value;
-        }
+        public Partition<KV> createPar(Object list, int size) {
+            if (list == null)
+                throw new NullPointerException( "File must not be null");
+            if(!(size >0)){
+                throw new IllegalArgumentException("Size must be greater than 0");
+            }
 
-
-        public void sort(KV k1, KV k2){
-
+                return new Partition((LinkedList) list, size);
 
         }
-
-
-        public void is_sorted(){
-
-        }
-        public int compareTo(KV k1, KV k2) {
-        return k1.this.key.compareTo(k2.getClass());
-     }
-}
-
 
     }
 	
