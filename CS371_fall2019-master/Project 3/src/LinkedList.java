@@ -229,8 +229,8 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
        //insert between cur and prev
        prev.next = new Node<AnyType>(key, cur);  
     }
-   
- /*******************************************************
+
+    /*******************************************************
  *
  *  The Node class
  *
@@ -260,7 +260,8 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
 
    public Iterator<AnyType> iterator()
    {
-      return new LinkedListIterator();
+
+       return new LinkedListIterator();
    }
 
    class LinkedListIterator implements Iterator<AnyType>

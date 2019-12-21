@@ -19,7 +19,8 @@ class Partition<KV> extends LinkedList{
         public Partition(LinkedList <KV> list, int size) {
         this.list = list;
         this.size = size;
-    }
+
+        }
 
         public Partition<KV> createPar(Object list, int size) {
             if (list == null)
@@ -29,9 +30,11 @@ class Partition<KV> extends LinkedList{
             }
 
                 return new Partition((LinkedList) list, size);
-
         }
 
-    }
+}
+
+
+
 	
 
