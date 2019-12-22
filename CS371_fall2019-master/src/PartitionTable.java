@@ -15,7 +15,7 @@ public class PartitionTable extends LinkedList{
 
 	public void addToPartitionAt(int index, Object key, int value){
 
-		partitions[index].add(key, value);
+		partitions[index].add();
 
 	}
 
