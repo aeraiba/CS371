@@ -1,3 +1,6 @@
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
+import java.security.KeyException;
+import java.security.PublicKey;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -30,6 +33,12 @@ class Partition<KV> extends LinkedList{
             }
 
                 return new Partition((LinkedList) list, size);
+        }
+
+        public void add(Object key, int value){
+            KV k1 = new KV();
+
+
         }
 
 }
