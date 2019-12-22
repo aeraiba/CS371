@@ -19,18 +19,16 @@ public class MapReduce {
 	static MapperReducerAPI customMR;
 	static int numPartitions;
 
-	static void MREmit(Object key, Object value)
+	static void MREmit(Object key, int value)
 	{
-        KV keyvalue = new KV(key, value);'
-        int index = keyvalue.Partitioner();
-        pt.addToPartitonTableAt(keyvalue);
+
 		//TODO: (key, value) must be emit into PartitionTable.
 		// use Partitioner defined in MapperReducerAPI to
 		// compute the index of partitions where this key will be
 		// added.
 
-        //add key value itno partition table keyvalue.;
-
+    int index = Partitioner(key, value);
+		pt.addToPartitionAt(index, key, value);
 	}
 
 	static Object MRGetNext(Object key, int partition_number) {
@@ -42,6 +40,7 @@ public class MapReduce {
 		return null; //just to pass compile.
 
 	}
+
 	static void MRRun(String inputFileName,
 		    		  MapperReducerAPI mapperReducerObj,
 		    		  int num_mappers,
