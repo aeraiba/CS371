@@ -20,6 +20,18 @@ public class PartitionTable {
 
 	}
 	
+public void isSortedPartitionAt(int index){
+		if (head == null)
+			return true;
 
+		// Traverse the list till last node and return false if a node is smaller than or equal its next.
+		for (KV t = head; t.next != null; t = t.next)
+			if (t.key.compareTo(t.next.key);
+				return false;
+
+		return true;
+
+
+	}
 
 }
