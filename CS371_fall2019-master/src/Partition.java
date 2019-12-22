@@ -1,14 +1,17 @@
-import java.util.Comparator;
-import java.util.Iterator;
+import java.util.*;
+import java.util.LinkedList;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-class Partition <KV>{
+class Partition <KV> {
+
+    private final Lock lock = new ReentrantLock();
+    private final Condition full = lock.newCondition();
+    private final Condition empty = lock.newCondition();
 
     private final int size;
     private final LinkedList<KV> list;
-    int index;
     Object key;
     int value;
     KV next;
@@ -30,9 +33,24 @@ class Partition <KV>{
         return new Partition((LinkedList) list, size);
     }
 
-    public void add(Object key, int value){
-        KV k1 = new KV();
-
+    public void sort(LinkedList list){
+        List copy = new ArrayList(list);
+        Collections.sort(list);
 
     }
+    public boolean is_sorted(LinkedList List){
+
+        List copy = new ArrayList(list);
+        Collections.sort(copy);
+        return copy.equals(list);
+
     }
+    public KV getNext(){
+
+        if(list.iterator().hasNext());
+            return list.iterator().next();
+
+    }
+
+
+}

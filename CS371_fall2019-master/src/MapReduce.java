@@ -19,18 +19,16 @@ public class MapReduce {
 	static MapperReducerAPI customMR;
 	static int numPartitions;
 
-	static void MREmit(Object key, Object value)
+	static void MREmit(Object key, int value)
 	{
-        KV keyvalue = new KV(key, value);'
-        int index = keyvalue.Partitioner();
-        pt.addToPartitonTableAt(keyvalue);
+
 		//TODO: (key, value) must be emit into PartitionTable.
 		// use Partitioner defined in MapperReducerAPI to
 		// compute the index of partitions where this key will be
 		// added.
 
-        //add key value itno partition table keyvalue.;
-
+		int index = Partitioner(key, value);
+		pt.addToPartitionAt(index, key, value);
 	}
 
 	static Object MRGetNext(Object key, int partition_number) {
@@ -42,10 +40,11 @@ public class MapReduce {
 		return null; //just to pass compile.
 
 	}
+
 	static void MRRun(String inputFileName,
-		    		  MapperReducerAPI mapperReducerObj,
-		    		  int num_mappers,
-		    		  int num_reducers)
+					  MapperReducerAPI mapperReducerObj,
+					  int num_mappers,
+					  int num_reducers)
 	{
 		setup(num_mappers, inputFileName);
 		//TODO: launch mappers, main thread must join all mappers before
@@ -66,35 +65,35 @@ public class MapReduce {
 			}
 		}
 
-    	LOGGER.log(Level.INFO, "All Maps are completed");
+		LOGGER.log(Level.INFO, "All Maps are completed");
 
-    	//TODO: launch sorters and reducers. Each partition is assigned a sorter
-    	// and a reducer which works like a *pipeline* with mapper. Sorter[i] takes
-    	// over the kv list in the partition[i] and starts sorting, then mapper[i]
-    	// can start adding more to partition right away. Reducer[i] waits for
-    	// sorter to sort all kv pairs
-    	//Main thread waits for reducers to complete.
-			Thread sorters[] = new Thread[num_reducers];
-			for (int i = 0; i < num_reducers; i++) {
-				sorters[i] = new Thread(new Sorter(i));
-				sorters[i].start();
+		//TODO: launch sorters and reducers. Each partition is assigned a sorter
+		// and a reducer which works like a *pipeline* with mapper. Sorter[i] takes
+		// over the kv list in the partition[i] and starts sorting, then mapper[i]
+		// can start adding more to partition right away. Reducer[i] waits for
+		// sorter to sort all kv pairs
+		//Main thread waits for reducers to complete.
+		Thread sorters[] = new Thread[num_reducers];
+		for (int i = 0; i < num_reducers; i++) {
+			sorters[i] = new Thread(new Sorter(i));
+			sorters[i].start();
+		}
+
+		Thread reducers[] = new Thread[num_reducers];
+		for (int i = 0; i < num_reducers; i++) {
+			reducers[i] = new Thread(new Reducer(i));
+			reducers[i].start();
+		}
+
+		for (int i = 0; i < num_reducers; i++) {
+			try {
+				reducers[i].join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
+		}
 
-			Thread reducers[] = new Thread[num_reducers];
-			for (int i = 0; i < num_reducers; i++) {
-				reducers[i] = new Thread(new Reducer(i));
-				reducers[i].start();
-			}
-
-			for (int i = 0; i < num_reducers; i++) {
-				try {
-					reducers[i].join();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-
-        LOGGER.log(Level.INFO,"Execution of all maps and reduces took in seconds: {0}", (stopWatch.getElapsedTime()));
+		LOGGER.log(Level.INFO,"Execution of all maps and reduces took in seconds: {0}", (stopWatch.getElapsedTime()));
 		teardown();
 
 	}
@@ -166,15 +165,15 @@ public class MapReduce {
 	}
 	static private void teardown( ) {
 		pw.close();
-        try {
+		try {
 			Process p = Runtime.getRuntime().exec(new String[] { "/bin/sh" , "-c", "./test.sh" });
 			p.waitFor();
 			int exitVal = p.exitValue();
-	        if(exitVal == 0) {
-	        	LOGGER.log(Level.INFO, "PASSED");
-	        } else {
-		        LOGGER.log(Level.INFO, "FAILED, process exit value = {0}", exitVal);
-	        }
+			if(exitVal == 0) {
+				LOGGER.log(Level.INFO, "PASSED");
+			} else {
+				LOGGER.log(Level.INFO, "FAILED, process exit value = {0}", exitVal);
+			}
 
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.toString());
@@ -182,13 +181,13 @@ public class MapReduce {
 	}
 
 	static private class StopWatch{
-		 private long startTime;
-		    public StopWatch() {
-		        startTime = System.currentTimeMillis();
-		    }
-		    public double getElapsedTime() {
-		        long endTime = System.currentTimeMillis();
-		        return (double) (endTime - startTime) / (1000);
-		    }
+		private long startTime;
+		public StopWatch() {
+			startTime = System.currentTimeMillis();
+		}
+		public double getElapsedTime() {
+			long endTime = System.currentTimeMillis();
+			return (double) (endTime - startTime) / (1000);
+		}
 	}
 }
