@@ -14,7 +14,7 @@ public class WordCount extends MapperReducerAPI{
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	public void Reduce(Object key, int partition_number) {
@@ -36,6 +36,6 @@ public class WordCount extends MapperReducerAPI{
     	}
     	s.close();
 		MapReduce.MRRun(inputFileName, new WordCount(), 20, 20);
-	}	
-	
+	}
+
 }
