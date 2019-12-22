@@ -1,6 +1,5 @@
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 public class PartitionTable extends LinkedList{
 	Partition <KV> [] partitions;
@@ -21,24 +20,20 @@ public class PartitionTable extends LinkedList{
 	}
 
 	public void sortPartitionAt(int index){
-		LinkedList curPar = partitions[index];
-		Collections.sort(curPar);
-
-		}
+		Partition <KV> curPar;
+		curPar = partitions[index];
+		List copy = new ArrayList((Collection) curPar);
+		Collections.sort(copy);
 
 	}
 	public boolean isSortedPartitionAt(int index){
 
-		if (head == null)
-			return true;
+		Partition<KV> currPar;
+		currPar = partitions[index];
+		List copy = new ArrayList((Collection) curPar);
+		Collections.sort(copy);
 
-		// Traverse the list till last node and return false if a node is smaller than or equal its next.
-		for (KV t = head; t.next != null; t = t.next)
-			if (partitions[index].key.compareTo(partitions[index].key.next));
-				return false;
-
-		return true;
-
+		return copy.equals(currPar);
 
 	}
 
