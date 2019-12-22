@@ -28,12 +28,12 @@ public class PartitionTable extends LinkedList{
 	}
 	public boolean isSortedPartitionAt(int index){
 
-		Partition<KV> currPar;
-		currPar = partitions[index];
+		Partition <KV> curPar;
+		curPar = partitions[index];
 		List copy = new ArrayList((Collection) curPar);
 		Collections.sort(copy);
 
-		return copy.equals(currPar);
+		return copy.equals(curPar);
 
 	}
 
