@@ -21,12 +21,10 @@ public class PartitionTable extends LinkedList{
 	}
 
 	public void sortPartitionAt(int index){
-		Partition curPar = partitions[index];
-		Collections.sort(partitions[index]);
+		LinkedList curPar = partitions[index];
+		Collections.sort(curPar);
 
 		}
-
-
 
 	}
 	public boolean isSortedPartitionAt(int index){
