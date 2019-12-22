@@ -39,7 +39,6 @@ class Partition <KV> {
     public void add(LinkedList list, Object key, int size){
 
         createPar(list, size);
-
     }
     public void sort(LinkedList list){
         lock.unlock();
