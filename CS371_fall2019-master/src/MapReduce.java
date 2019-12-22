@@ -14,7 +14,7 @@ public class MapReduce {
 	static StopWatch stopWatch;
 	static Logger LOGGER;
 
-	// External functions: these are what you must define
+	//External functions: these are what you must define
 	static PartitionTable [] pt = new PartitionTable[];
 	static MapperReducerAPI customMR;
 	static int numPartitions;
